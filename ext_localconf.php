@@ -21,7 +21,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-call_user_func(function() {
+call_user_func(function () {
 
     if (TYPO3_MODE === 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
         $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
@@ -31,6 +31,7 @@ call_user_func(function() {
             ['name' => 'cube']
         );
 
+        // Connect Signal to Slot
         GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class)
             ->connect(
                 \TYPO3\CMS\Backend\Backend\ToolbarItems\SystemInformationToolbarItem::class,
@@ -42,11 +43,8 @@ call_user_func(function() {
 
     // Configure logging
     $logging = array(
-        // configuration for INFO level log entries
         \TYPO3\CMS\Core\Log\LogLevel::INFO => array(
-            // add a FileWriter
             'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => array(
-                // configuration for the writer
                 'logFile' => 'typo3temp/var/logs/' . date('Ymd') . '.log'
             )
         )
